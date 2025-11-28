@@ -35,7 +35,7 @@ export default function Home() {
       return;
     }
 
-    const res = await fetch("http://localhost:5000/api/enroll", {
+    const res = await fetch("http://localhost:5001/api/enroll", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, phone }),

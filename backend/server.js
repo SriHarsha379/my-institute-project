@@ -7,15 +7,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Safe PORT (macOS blocks 5000)
+const PORT = process.env.PORT || 5001;
+
 // File to store enrollments
 const DB_FILE = path.join(__dirname, "enrollments.json");
 
-// If file not present → create it
+// Create file if missing
 if (!fs.existsSync(DB_FILE)) {
   fs.writeFileSync(DB_FILE, JSON.stringify([]));
 }
 
-// API to receive enroll form
+// API to receive enroll form data
 app.post("/api/enroll", (req, res) => {
   const { name, email, phone } = req.body;
 
@@ -39,7 +42,10 @@ app.post("/api/enroll", (req, res) => {
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("Backend running successfully!");
+  res.send("Backend running successfully on port " + PORT);
 });
 
-app.listen(5000, () => console.log("Backend running at http://localhost:5000"));
+// Start Server
+app.listen(PORT, () => {
+  console.log(`🚀 Backend running at http://localhost:${PORT}`);
+});
